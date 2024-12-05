@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="POST">
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+
+        {% if weather_data %}
+            <div class="weather-info">
+                <h2>Weather in {{ weather_data['location']['name'] }}, {{ weather_data['location']['country'] }}</h2>
+                <p>Region: {{ weather_data['location']['region'] }}</p>
+                <p>Local Time: {{ weather_data['location']['localtime'] }}</p>
+                <h3>Current Conditions</h3>
+                <p>Temperature: {{ weather_data['current']['temp_c'] }}°C ({{ weather_data['current']['temp_f'] }}°F)</p>
+                <p>Condition: {{ weather_data['current']['condition']['text'] }}</p>
+                <img src="{{ weather_data['current']['condition']['icon'] }}" alt="Weather Icon">
+                <p>Feels Like: {{ weather_data['current']['feelslike_c'] }}°C ({{ weather_data['current']['feelslike_f'] }}°F)</p>
+                <p>Wind: {{ weather_data['current']['wind_kph'] }} km/h ({{ weather_data['current']['wind_mph'] }} mph), Direction: {{ weather_data['current']['wind_dir'] }}</p>
+                <p>Humidity: {{ weather_data['current']['humidity'] }}%</p>
+                <p>Pressure: {{ weather_data['current']['pressure_mb'] }} mb</p>
+                <p>Visibility: {{ weather_data['current']['vis_km'] }} km</p>
+                <p>UV Index: {{ weather_data['current']['uv'] }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
